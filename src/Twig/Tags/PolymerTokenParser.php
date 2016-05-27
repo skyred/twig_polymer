@@ -21,9 +21,9 @@ class PolymerTokenParser
      */
     public function getTag()
     {
-        return $this->configuration->getTwig()->getTag();
+        return "polymer";
     }
-    
+
     /**
      * {@inheritdoc}
      */

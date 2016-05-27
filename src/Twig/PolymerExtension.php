@@ -1,5 +1,5 @@
 <?php
-namespace Headzoo\Bundle\PolymerBundle\Twig;
+namespace Drupal\twig_polymer\Twig;
 
 use Headzoo\Bundle\PolymerBundle\Config\PolymerConfigurationAwareInterface;
 use Headzoo\Bundle\PolymerBundle\Config\PolymerConfigurationAwareTrait;
@@ -34,7 +34,7 @@ class PolymerExtension
 
     /**
      * Adds an object which contains exported functions
-     * 
+     *
      * @param Functions\FunctionProviderInterface $functions
      */
     public function addFunctions(Functions\FunctionProviderInterface $functions)
@@ -49,7 +49,7 @@ class PolymerExtension
 
     /**
      * Adds an object which contains exported filters
-     * 
+     *
      * @param Filters\FilterProviderInterface $filters
      */
     public function addFilters(Filters\FilterProviderInterface $filters)
@@ -64,7 +64,7 @@ class PolymerExtension
 
     /**
      * Adds an object used to parse Polymer tags
-     * 
+     *
      * @param Twig_TokenParserInterface $token_parser
      */
     public function addTokenParser(Twig_TokenParserInterface $token_parser)
@@ -115,7 +115,7 @@ class PolymerExtension
             ]
         ];
     }
-    
+
     /**
      * Returns the name of the extension.
      *

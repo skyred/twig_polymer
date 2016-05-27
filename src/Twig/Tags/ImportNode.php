@@ -1,7 +1,6 @@
 <?php
-namespace Headzoo\Bundle\PolymerBundle\Twig\Tags;
+namespace Drupal\twig_polymer\Twig\Tags;
 
-use Headzoo\Bundle\PolymerBundle\Config\TwigConfigurationInterface;
 use Twig_Node_Expression_Array;
 use Twig_Node_Expression;
 use Twig_Node;
@@ -33,7 +32,7 @@ class ImportNode
         $template = TwigConfigurationInterface::TEMPLATE_IMPORT;
         $assets   = $this->getAttribute("assets");
         $is_array = isset($assets[0]) && ($assets[0] instanceof Twig_Node_Expression_Array);
-        
+
         $compiler
             ->addDebugInfo($this)
             ->write('$tmp = ["polymer_assets" => ');
@@ -43,23 +42,23 @@ class ImportNode
                 ->indent()
                 ->write('[');
         }
-        
+
         $compiler
             ->raw("\n")
             ->indent();
-        
+
         foreach ($this->getAttribute("assets") as $file_name) {
             $compiler
                 ->subcompile($file_name, false)
                 ->raw(",\n");
         }
-        
+
         if (!$is_array) {
             $compiler
                 ->outdent()
                 ->write(']');
         }
-        
+
         $compiler
             ->outdent()
             ->raw("\n")

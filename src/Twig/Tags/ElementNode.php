@@ -1,7 +1,6 @@
 <?php
-namespace Headzoo\Bundle\PolymerBundle\Twig\Tags;
+namespace Drupal\twig_polymer\Twig\Tags;
 
-use Headzoo\Bundle\PolymerBundle\Config\TwigConfigurationInterface;
 use Twig_NodeTraverser;
 use Twig_Node;
 use Twig_Token;
@@ -54,13 +53,13 @@ class ElementNode
         $element_name_clean = preg_replace('/[^\w]/i', '_', $element_name);
         $body_func          = sprintf('$body_%s', $element_name_clean);
         $template           = TwigConfigurationInterface::TEMPLATE_ELEMENT;
-        
+
         $compiler
             ->addDebugInfo($this)
             ->write($body_func . ' = function() use($context) {')
             ->raw("\n")
             ->indent();
-        
+
         $compiler
             ->write('ob_start();')
             ->subcompile($this->getNode("body"))
