@@ -18,7 +18,7 @@ class PolymerTokenParser
      */
     public function getTag()
     {
-        $config = \Drupal::configFactory("twig_polymer.settings");
+        $config = \Drupal::config("twig_polymer.settings");
         return $config->get("twig_tag");
     }
 

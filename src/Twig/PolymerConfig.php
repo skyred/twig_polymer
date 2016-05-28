@@ -1,5 +1,5 @@
 <?php
-namespace Drupal\twig_polymer\Twig
+namespace Drupal\twig_polymer\Twig;
 
 class PolymerConfig {
 

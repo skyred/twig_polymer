@@ -28,7 +28,7 @@ class Lexer
     public function __construct(Twig_Environment $env, array $options = [])
     {
         parent::__construct($env, $options);
-        $config  = \Drupal::configFactory("twig_polymer.settings");
+        $config  = \Drupal::config("twig_polymer.settings");
         $element_start = $config->get("twig_tag"); //"polymer";
         $element_end   = "end{$element_start}";
         $this->polymer_regexes["starts"]["element"] = '/({%\s*' . $element_start . '\s+element.*%})/i';

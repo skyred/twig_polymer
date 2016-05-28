@@ -10,7 +10,7 @@ use Drupal\Core\Cache\CacheBackendInterface;
  * Overrides the built in environment to set our custom lexer.
  */
 class Environment
-    extends \Drupal\TwigEnvironment
+    extends \Drupal\Core\Template\TwigEnvironment
 {
 
     /**

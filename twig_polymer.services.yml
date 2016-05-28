@@ -1,5 +1,5 @@
 services:
   twig_polymer.twig.polymer_extension:
     class: Drupal\twig_polymer\Twig\PolymerExtension
-      tags:
-        - { name: twig.extension }
+    tags:
+      - { name: twig.extension }

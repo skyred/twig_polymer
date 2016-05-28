@@ -29,7 +29,7 @@ class ImportNode
      */
     public function compile(Twig_Compiler $compiler)
     {
-        $config = \Drupal::configFactory("twig_polymer");
+        $config = \Drupal::config("twig_polymer");
         $template = $config->get("template_import");
         $assets   = $this->getAttribute("assets");
         $is_array = isset($assets[0]) && ($assets[0] instanceof Twig_Node_Expression_Array);

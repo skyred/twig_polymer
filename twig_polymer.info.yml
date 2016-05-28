@@ -1,5 +1,5 @@
 type: module
-name: Twig Polymer
+name: 'Twig Polymer'
 description: 'Twig extension that simplifies creating Polymer element in templates.'
 package: Twig
 core: 8.x

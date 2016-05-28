@@ -30,7 +30,7 @@ class PolymerExtension
     private $token_parsers = [];
 
     public function __construct() {
-        $this->config = \Drupal::configFactory("twig_polymer");
+        $this->config = \Drupal::config("twig_polymer");
     }
 
     /**
