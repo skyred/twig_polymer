@@ -1,6 +1,7 @@
 <?php
 namespace Drupal\twig_polymer\Twig;
 
+use Drupal\twig_polymer\Twig\Tags\PolymerTokenParser;
 use Twig_TokenParserInterface;
 use Twig_Extension;
 use Twig_SimpleFunction;
@@ -34,46 +35,6 @@ class PolymerExtension
     }
 
     /**
-     * Adds an object which contains exported functions
-     *
-     * @param Functions\FunctionProviderInterface $functions
-     */
-    public function addFunctions(Functions\FunctionProviderInterface $functions)
-    {
-        foreach($functions->getFunctions() as $name => $callable) {
-            $this->functions[] = new Twig_SimpleFunction(
-                $this->config->get("twig_tag") . "_{$name}",
-                $callable
-            );
-        }
-    }
-
-    /**
-     * Adds an object which contains exported filters
-     *
-     * @param Filters\FilterProviderInterface $filters
-     */
-    public function addFilters(Filters\FilterProviderInterface $filters)
-    {
-        foreach($filters->getFilters() as $name => $callable) {
-            $this->filters[] = new Twig_SimpleFilter(
-                $this->config->get("twig_tag") . "_{$name}",
-                $callable
-            );
-        }
-    }
-
-    /**
-     * Adds an object used to parse Polymer tags
-     *
-     * @param Twig_TokenParserInterface $token_parser
-     */
-    public function addTokenParser(Twig_TokenParserInterface $token_parser)
-    {
-        $this->token_parsers[] = $token_parser;
-    }
-
-    /**
      * Returns a list of extension functions
      *
      * @return array
@@ -100,7 +61,9 @@ class PolymerExtension
      */
     public function getTokenParsers()
     {
-        return $this->token_parsers;
+        return array(
+            new PolymerTokenParser(),
+        );
     }
 
     /**
