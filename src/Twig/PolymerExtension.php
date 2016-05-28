@@ -31,7 +31,7 @@ class PolymerExtension
     private $token_parsers = [];
 
     public function __construct() {
-        $this->config = \Drupal::config("twig_polymer");
+        $this->config = \Drupal::config("twig_polymer.settings");
     }
 
     /**
@@ -41,7 +41,11 @@ class PolymerExtension
      */
     public function getFunctions()
     {
-        return $this->functions;
+        return array(
+            new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'asset', function(string $filename) {
+                return "/". $this->config->get("path_components") . '/'. $filename;
+            }),
+        );
     }
 
     /**

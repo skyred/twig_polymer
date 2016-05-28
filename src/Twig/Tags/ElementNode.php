@@ -49,11 +49,12 @@ class ElementNode
             $attributes[$name] = $attr->getValue();
         }
 
-        $config             = \Drupal::config("twig_polymer");
+        $config             = \Drupal::config("twig_polymer.settings");
         $element_name       = $this->_element_name->getValue();
         $element_name_clean = preg_replace('/[^\w]/i', '_', $element_name);
         $body_func          = sprintf('$body_%s', $element_name_clean);
         $template           = $config->get("template_element");
+
 
         $compiler
             ->addDebugInfo($this)

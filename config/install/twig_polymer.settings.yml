@@ -1,4 +1,5 @@
 twig_tag: polymer
 template_import: 'import.html.twig'
-template_import: 'element.html.twig'
+template_element: 'element.html.twig'
+path_components: 'libraries/bower_components'
 auto_verbatim: TRUE

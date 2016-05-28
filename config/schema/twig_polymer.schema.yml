@@ -13,6 +13,9 @@ twig_polymer.settings:
     template_element:
       type: string
       label: 'Template for Polymer element'
+    path_components:
+      type: string
+      label: 'Path for bower components'
     auto_verbatim:
       type: boolean
       label: 'Toggle Auto Verbatim'

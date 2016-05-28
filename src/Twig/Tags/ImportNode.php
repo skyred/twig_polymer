@@ -29,7 +29,7 @@ class ImportNode
      */
     public function compile(Twig_Compiler $compiler)
     {
-        $config = \Drupal::config("twig_polymer");
+        $config = \Drupal::config("twig_polymer.settings");
         $template = $config->get("template_import");
         $assets   = $this->getAttribute("assets");
         $is_array = isset($assets[0]) && ($assets[0] instanceof Twig_Node_Expression_Array);
@@ -65,7 +65,7 @@ class ImportNode
             ->raw("\n")
             ->write('];')
             ->raw("\n")
-            ->write('$template = $context["polymer"]["configuration"]->getTwig()->getTemplate(')
+            ->write('$template = $context["polymer"]["configuration"]->getTemplate(')
             ->string($template)
             ->raw(');')
             ->raw("\n\n")
