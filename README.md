@@ -8,4 +8,4 @@ Based on https://github.com/headzoo/polymer-bundle
  - Provides a Twig function polymer_asset() for converting asset URL
 
 ## Installation
- - Download polymer-first-elements.zip(https://github.com/googlecodelabs/polymer-first-elements/releases/download/v1.0/polymer-first-elements.zip) and place the bower_components folder it under Drupal root directory /libraries/
+ - Download [polymer-first-elements.zip](https://github.com/googlecodelabs/polymer-first-elements/releases/download/v1.0/polymer-first-elements.zip) and place the `bower_components` folder it under `Drupal root directory /libraries/`
