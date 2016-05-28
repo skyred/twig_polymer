@@ -1,0 +1,18 @@
+# Schema for the configuration files of the Twig Polymer module
+
+twig_polymer.settings:
+  type: config_object
+  label: 'Twig Polymer Settings'
+  mapping:
+    twig_tag:
+      type: string
+      label: 'Twig Tag'
+    template_import:
+      type: string
+      label: 'Template for <import>'
+    template_element:
+      type: string
+      label: 'Template for Polymer element'
+    auto_verbatim:
+      type: boolean
+      label: 'Toggle Auto Verbatim'

@@ -3,17 +3,15 @@ namespace Drupal\twig_polymer\Twig\Tags;
 
 use Twig_Environment;
 use Twig_LoaderInterface;
-
+use Drupal\Core\Cache\CacheBackendInterface;
 /**
  * Twig environment.
  *
  * Overrides the built in environment to set our custom lexer.
  */
 class Environment
-    extends Twig_Environment
-    implements PolymerConfigurationAwareInterface
+    extends \Drupal\TwigEnvironment
 {
-    use PolymerConfigurationAwareTrait;
 
     /**
      * @var array
@@ -25,14 +23,13 @@ class Environment
      *
      * @param Twig_LoaderInterface          $loader  A Twig_LoaderInterface instance
      * @param array                         $options An array of options
-     * @param PolymerConfigurationInterface $configuration
      */
-    public function __construct(Twig_LoaderInterface $loader = null, $options = array(), PolymerConfigurationInterface $configuration)
+    public function __construct($root, CacheBackendInterface $cache, $twig_extension_hash, \Twig_LoaderInterface $loader = NULL, $options = array())
     {
-        parent::__construct($loader, $options);
+        parent::__construct($root, $cache, $twig_extension_hash, $loader, $options);
 
         $this->_options = $options;
-        $this->setConfiguration($configuration);
+        //$this->setConfiguration($configuration);
     }
 
     /**
@@ -43,7 +40,7 @@ class Environment
     public function getLexer()
     {
         if (null === $this->lexer) {
-            $this->lexer = new Lexer($this, $this->_options, $this->configuration);
+            $this->lexer = new Lexer($this, $this->_options);
         }
 
         return $this->lexer;

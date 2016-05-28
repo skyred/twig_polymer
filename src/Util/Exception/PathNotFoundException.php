@@ -1,7 +1,7 @@
 <?php
-namespace Headzoo\Bundle\PolymerBundle\Util\Exception;
+namespace Drupal\twig_polymer\Util\Exception;
 
-use Headzoo\Bundle\PolymerBundle\Exception\PolymerException;
+use Drupal\twig_polymer\Exception\PolymerException;
 
 /**
  * Thrown when trying to resolve a path that does not exist.

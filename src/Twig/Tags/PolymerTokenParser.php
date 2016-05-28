@@ -1,8 +1,7 @@
 <?php
-namespace Headzoo\Bundle\PolymerBundle\Twig\Tags;
+namespace Drupal\twig_polymer\Twig\Tags;
 
-use Headzoo\Bundle\PolymerBundle\Config\PolymerConfigurationAwareInterface;
-use Headzoo\Bundle\PolymerBundle\Config\PolymerConfigurationAwareTrait;
+
 use Twig_Error_Syntax;
 use Twig_Token;
 use Twig_TokenParser;
@@ -12,16 +11,15 @@ use Twig_TokenParser;
  */
 class PolymerTokenParser
     extends Twig_TokenParser
-    implements PolymerConfigurationAwareInterface
 {
-    use PolymerConfigurationAwareTrait;
 
     /**
      * {@inheritdoc}
      */
     public function getTag()
     {
-        return "polymer";
+        $config = \Drupal::configFactory("twig_polymer.settings");
+        return $config->get("twig_tag");
     }
 
     /**

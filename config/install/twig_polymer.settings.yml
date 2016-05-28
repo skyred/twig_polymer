@@ -1,0 +1,4 @@
+twig_tag: polymer
+template_import: 'import.html.twig'
+template_import: 'element.html.twig'
+auto_verbatim: true

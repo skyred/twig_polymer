@@ -1,11 +1,7 @@
 <?php
-namespace Headzoo\Bundle\PolymerBundle\Util;
+namespace Drupal\twig_polymer\Util;
 
-use Headzoo\Bundle\PolymerBundle\Config\PolymerConfiguration;
-use Headzoo\Bundle\PolymerBundle\Config\PolymerConfigurationAwareInterface;
-use Headzoo\Bundle\PolymerBundle\Config\PolymerConfigurationAwareTrait;
-use Headzoo\Bundle\PolymerBundle\Config\PolymerConfigurationInterface;
-use Headzoo\Bundle\PolymerBundle\Exception\RuntimeException;
+use Drupal\twig_polymer\Exception\RuntimeException;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**

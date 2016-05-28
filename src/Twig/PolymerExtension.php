@@ -1,8 +1,6 @@
 <?php
 namespace Drupal\twig_polymer\Twig;
 
-use Headzoo\Bundle\PolymerBundle\Config\PolymerConfigurationAwareInterface;
-use Headzoo\Bundle\PolymerBundle\Config\PolymerConfigurationAwareTrait;
 use Twig_TokenParserInterface;
 use Twig_Extension;
 use Twig_SimpleFunction;
@@ -13,10 +11,9 @@ use Twig_SimpleFilter;
  */
 class PolymerExtension
     extends Twig_Extension
-    implements PolymerConfigurationAwareInterface
 {
-    use PolymerConfigurationAwareTrait;
 
+    private $config;
     /**
      * @var Twig_SimpleFunction[]
      */
@@ -32,6 +29,10 @@ class PolymerExtension
      */
     private $token_parsers = [];
 
+    public function __construct() {
+        $this->config = \Drupal::configFactory("twig_polymer");
+    }
+
     /**
      * Adds an object which contains exported functions
      *
@@ -41,7 +42,7 @@ class PolymerExtension
     {
         foreach($functions->getFunctions() as $name => $callable) {
             $this->functions[] = new Twig_SimpleFunction(
-                $this->configuration->getTwig()->getTag() . "_{$name}",
+                $this->config->get("twig_tag") . "_{$name}",
                 $callable
             );
         }
@@ -56,7 +57,7 @@ class PolymerExtension
     {
         foreach($filters->getFilters() as $name => $callable) {
             $this->filters[] = new Twig_SimpleFilter(
-                $this->configuration->getTwig()->getTag() . "_{$name}",
+                $this->config->get("twig_tag") . "_{$name}",
                 $callable
             );
         }
@@ -111,7 +112,7 @@ class PolymerExtension
     {
         return [
             "polymer" => [
-                "configuration" => $this->configuration
+                "configuration" => new PolymerConfig(), //$this->configuration
             ]
         ];
     }

@@ -1,5 +1,5 @@
 <?php
-namespace Headzoo\Bundle\PolymerBundle\Exception;
+namespace Drupal\twig_polymer\Exception;
 
 use Exception;
 

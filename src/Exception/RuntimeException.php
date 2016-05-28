@@ -1,5 +1,5 @@
 <?php
-namespace Headzoo\Bundle\PolymerBundle\Exception;
+namespace Drupal\twig_polymer\Exception;
 
 /**
  * Exception thrown if an error which can only be found on runtime occurs.
