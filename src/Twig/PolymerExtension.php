@@ -45,6 +45,12 @@ class PolymerExtension
             new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'asset', function(string $filename) {
                 return "/". $this->config->get("path_components") . '/'. $filename;
             }),
+            new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'encode', function($str) {
+                $arr = array(
+                    "data" => $str,
+                );
+                return json_encode($str);
+            }),
         );
     }
 
