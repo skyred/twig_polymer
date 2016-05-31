@@ -14,89 +14,90 @@ class PolymerExtension
     extends Twig_Extension
 {
 
-    private $config;
-    /**
-     * @var Twig_SimpleFunction[]
-     */
-    private $functions = [];
+  private $config;
+  /**
+   * @var Twig_SimpleFunction[]
+   */
+  private $functions = [];
 
-    /**
-     * @var Twig_SimpleFilter[]
-     */
-    private $filters = [];
+  /**
+   * @var Twig_SimpleFilter[]
+   */
+  private $filters = [];
 
-    /**
-     * @var Twig_TokenParserInterface
-     */
-    private $token_parsers = [];
+  /**
+   * @var Twig_TokenParserInterface
+   */
+  private $token_parsers = [];
 
-    public function __construct() {
-        $this->config = \Drupal::config("twig_polymer.settings");
-    }
+  public function __construct() {
+    $this->config = \Drupal::config("twig_polymer.settings");
+  }
 
-    /**
-     * Returns a list of extension functions
-     *
-     * @return array
-     */
-    public function getFunctions()
+  /**
+   * Returns a list of extension functions
+   *
+   * @return array
+   */
+  public function getFunctions()
     {
-        return array(
-            new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'asset', function(string $filename) {
+    return array(
+      new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'asset', function(string $filename) {
                 return "/". $this->config->get("path_components") . '/'. $filename;
-            }),
-            new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'encode', function($str) {
+      }),
+      new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'encode', function($str) {
                 $arr = array(
-                    "data" => $str,
+                  "data" => $str,
                 );
                 return json_encode($str);
-            }),
-        );
-    }
+      }),
+    );
+  }
 
-    /**
-     * Returns a list of extension filters
-     *
-     * @return array
-     */
-    public function getFilters()
+  /**
+   * Returns a list of extension filters
+   *
+   * @return array
+   */
+  public function getFilters()
     {
-        return $this->filters;
-    }
+    return $this->filters;
+  }
 
-    /**
-     * Returns the token parser instances to add to the existing list.
-     *
-     * @return array An array of Twig_TokenParserInterface or Twig_TokenParserBrokerInterface instances
-     */
-    public function getTokenParsers()
+  /**
+   * Returns the token parser instances to add to the existing list.
+   *
+   * @return array An array of Twig_TokenParserInterface or Twig_TokenParserBrokerInterface instances
+   */
+  public function getTokenParsers()
     {
-        return array(
-            new PolymerTokenParser(),
-        );
-    }
+    return array(
+      new PolymerTokenParser(),
+    );
+  }
 
-    /**
-     * Returns a list of global variables to add to the existing list.
-     *
-     * @return array
-     */
-    public function getGlobals()
+  /**
+   * Returns a list of global variables to add to the existing list.
+   *
+   * @return array
+   */
+  public function getGlobals()
     {
-        return [
+    return [
             "polymer" => [
-                "configuration" => new PolymerConfig(), //$this->configuration
+                "configuration" => new PolymerConfig(),
+    //$this->configuration
             ]
         ];
-    }
+  }
 
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
+  /**
+   * Returns the name of the extension.
+   *
+   * @return string The extension name
+   */
+  public function getName()
     {
-        return "polymer_extension";
-    }
+    return "polymer_extension";
+  }
 }

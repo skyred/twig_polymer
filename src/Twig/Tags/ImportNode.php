@@ -12,55 +12,55 @@ use Twig_Compiler;
 class ImportNode
     extends Twig_Node
 {
-    /**
-     * Constructor
-     *
-     * @param Twig_Node_Expression[] $assets
-     * @param int                    $lineno
-     * @param string                 $tag
-     */
-    public function __construct(array $assets, $lineno, $tag)
+  /**
+   * Constructor
+   *
+   * @param Twig_Node_Expression[] $assets
+   * @param int $lineno
+   * @param string $tag
+   */
+  public function __construct(array $assets, $lineno, $tag)
     {
-        parent::__construct([], ["assets" => $assets], $lineno, $tag);
-    }
+    parent::__construct([], ["assets" => $assets], $lineno, $tag);
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function compile(Twig_Compiler $compiler)
+  /**
+   * {@inheritdoc}
+   */
+  public function compile(Twig_Compiler $compiler)
     {
-        $config = \Drupal::config("twig_polymer.settings");
-        $template = $config->get("template_import");
-        $assets   = $this->getAttribute("assets");
-        $is_array = isset($assets[0]) && ($assets[0] instanceof Twig_Node_Expression_Array);
+    $config = \Drupal::config("twig_polymer.settings");
+    $template = $config->get("template_import");
+    $assets   = $this->getAttribute("assets");
+    $is_array = isset($assets[0]) && ($assets[0] instanceof Twig_Node_Expression_Array);
 
-        $compiler
+    $compiler
             ->addDebugInfo($this)
             ->write('$tmp = ["polymer_assets" => ');
-        if (!$is_array) {
-            $compiler
+    if (!$is_array) {
+      $compiler
                 ->raw("\n")
                 ->indent()
                 ->write('[');
-        }
+    }
 
-        $compiler
+    $compiler
             ->raw("\n")
             ->indent();
 
-        foreach ($this->getAttribute("assets") as $file_name) {
-            $compiler
-                ->subcompile($file_name, false)
+    foreach ($this->getAttribute("assets") as $file_name) {
+      $compiler
+                ->subcompile($file_name, FALSE)
                 ->raw(",\n");
-        }
+    }
 
-        if (!$is_array) {
-            $compiler
+    if (!$is_array) {
+      $compiler
                 ->outdent()
                 ->write(']');
-        }
+    }
 
-        $compiler
+    $compiler
             ->outdent()
             ->raw("\n")
             ->write('];')
@@ -71,5 +71,5 @@ class ImportNode
             ->raw("\n\n")
             ->write('$this->env->display($template, $tmp);')
             ->raw("\n");
-    }
+  }
 }
