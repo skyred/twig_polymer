@@ -1,17 +1,20 @@
-# Polymer Twig Extension for Drupal 8
-
-Based on https://github.com/headzoo/polymer-bundle
+# Twig Polymer Module for Drupal 8
+Making Polymer (and Web Components) work more easily with Twig.
 
 ## What it does
- - Loads polyfill webcomponents-lite on pages that uses it
- - Provides a Twig tag {% polymer element %} for wrapping Polymer element
- - Provides a Twig function polymer_asset() for converting asset URL
+ * Loads polyfill `webcomponents-lite` on pages that uses Polymer
+ * Provides a Twig extension: (Based on https://github.com/headzoo/polymer-bundle)
+   * a Twig tag {% polymer element %} for wrapping Polymer element
+   * a Twig function polymer_asset() for converting asset URL
+ * Provides an endpoint for loading Polymer elements from the browser.
 
 ## Installation
  - Download and unzip [polymer-first-elements.zip](https://github.com/googlecodelabs/polymer-first-elements/releases/download/v1.0/polymer-first-elements.zip) and place the `bower_components` folder under `Drupal root directory /libraries/`. Create the folder if it does not exsit.
  - Enable this module
 
 ## Usage
+
+### Polymer Extension
 In any template, use `{{ polymer element "name" }}` to define a Polymer element.
 
 For example,

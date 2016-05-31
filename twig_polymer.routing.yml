@@ -1,0 +1,7 @@
+twig_polymer.get_element:
+  path: '/polymer-element/{themename}/{elementname}'
+  defaults:
+    _controller: '\Drupal\twig_polymer\Controller\PolymerController::getElement'
+  requirements:
+    _permission: 'access content'
+
