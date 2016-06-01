@@ -67,6 +67,6 @@ Note that `{template}` does not include `.html.twig`. For example if you have a 
 
 If your site has i18n enabled. Then {% trans %} will work in those Twig templates as well. You can translate the strings in your template at `/admin/config/regional/translate`. And, suppose you have `en` and `fr` languages enabled, 
 
-`http://yoursite/polymer-element/mytheme/node-element` will give you the English version, 
+`http://yoursite/en/polymer-element/mytheme/node-element` will give you the English version, 
 
 and `http://yoursite/fr/polymer-element/mytheme/node-element` will give you the French version. 
