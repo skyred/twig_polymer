@@ -12,12 +12,27 @@ use Symfony\Component\HttpFoundation\Response;
 class PolymerController
 {
   public function getElement($themename, $elementname) {
-      $render = array (
-          "#theme" => "polymer_element"
-      );
-      $html = \Drupal::service('renderer')->renderRoot($render);
-      var_dump( $html->__toString());
 
-      return new Response("OK" . $themename . '->' . $elementname.'\n'.$html, 200, ["Content-Type" => "text/html"]);
+    $twig = \Drupal::service('twig');
+
+    $theme_dir = drupal_get_path("theme", $themename);
+    if ($theme_dir === "") {
+      return new Response('Theme ' . $themename . 'not found.', 404, ["Content-Type" => "text/html"]);
+    }
+
+    try {
+      $template = $twig
+        ->loadTemplate($theme_dir . '/polymer-elements/' . $elementname .'.html.twig');
+    } catch (\Twig_Error_Loader $e) {
+
+      return new Response('Template not found.', 404, ["Content-Type" => "text/html"]);
+    }
+
+    $html = $template->render(["hello" => "world"]);
+
+    //var_dump( $html);
+
+    //return $render;
+    return new Response($html, 200, ["Content-Type" => "text/html"]);
   }
 }

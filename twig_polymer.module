@@ -2,10 +2,11 @@
 
 
 function twig_polymer_theme() {
-    $theme['polymer_element'] = [
-        'variables' => ['name'=>NULL],
-        'template' => 'nodeelement',
-    ];
-
-    return $theme;
+  return [
+    'polymer_element' => [
+      'variables' => [
+        'name'=> NULL
+      ],
+    ]
+  ];
 }
