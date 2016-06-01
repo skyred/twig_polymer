@@ -44,7 +44,7 @@ class PolymerExtension
     return array(
       new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'asset', function($filename) {
         if (substr($filename, -5) === ".html") {
-          // if filename ends with ".html" we load the element from vendor library
+          // if filename ends with ".html" we load the element from vendor library.
           return "/". $this->config->get("path_components") . '/'. $filename;
         } else {
           $base_url = \Drupal::url("twig_polymer.get_element_current_theme", ["elementname" => $filename]);
@@ -93,7 +93,6 @@ class PolymerExtension
     return [
             "polymer" => [
                 "configuration" => new PolymerConfig(),
-    //$this->configuration
             ]
         ];
   }

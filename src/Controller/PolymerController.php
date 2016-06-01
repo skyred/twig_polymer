@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Contains Drupal\twig_polymer\Controller\PolymerController
  */
 
