@@ -1,12 +1,2 @@
 <?php
 
-
-function twig_polymer_theme() {
-  return [
-    'polymer_element' => [
-      'variables' => [
-        'name'=> NULL
-      ],
-    ]
-  ];
-}
