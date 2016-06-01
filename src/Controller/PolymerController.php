@@ -38,7 +38,7 @@ class PolymerController
 
     $theme_dir = drupal_get_path("theme", $theme_name);
     if ($theme_dir === "") {
-      return new Response('Theme ' . $theme_name . 'not found.', 404, ["Content-Type" => "text/html"]);
+      return new Response('Theme ' . $theme_name . ' is not found.', 404, ["Content-Type" => "text/html"]);
     }
 
     try {

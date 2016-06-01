@@ -42,14 +42,21 @@ class PolymerExtension
   public function getFunctions()
     {
     return array(
-      new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'asset', function(string $filename) {
-                return "/". $this->config->get("path_components") . '/'. $filename;
+      new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'asset', function($filename) {
+        if (substr($filename, -5) === ".html") {
+          // if filename ends with ".html" we load the element from vendor library
+          return "/". $this->config->get("path_components") . '/'. $filename;
+        } else {
+          $base_url = \Drupal::url("twig_polymer.get_element_current_theme", ["elementname" => $filename]);
+          return $base_url;
+        }
+
       }),
       new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'encode', function($str) {
-                $arr = array(
-                  "data" => $str,
-                );
-                return json_encode($str);
+        $arr = array(
+          "data" => $str,
+        );
+        return json_encode($str);
       }),
     );
   }
