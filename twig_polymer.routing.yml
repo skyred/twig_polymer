@@ -5,3 +5,9 @@ twig_polymer.get_element:
   requirements:
     _permission: 'access content'
 
+twig_polymer.get_element_current_theme:
+  path: '/polymer-element/{elementname}'
+  defaults:
+    _controller: '\Drupal\twig_polymer\Controller\PolymerController::getElementInCurrentTheme'
+  requirements:
+    _permission: 'access content'

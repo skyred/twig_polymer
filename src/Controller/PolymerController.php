@@ -35,4 +35,27 @@ class PolymerController
     //return $render;
     return new Response($html, 200, ["Content-Type" => "text/html"]);
   }
+
+
+  public function getElementInCurrentTheme($elementname) {
+
+    $twig = \Drupal::service('twig');
+
+    $theme_dir = \Drupal::theme()->getActiveTheme()->getPath();
+
+    try {
+      $template = $twig
+        ->loadTemplate($theme_dir . '/polymer-elements/' . $elementname .'.html.twig');
+    } catch (\Twig_Error_Loader $e) {
+
+      return new Response('Template not found.', 404, ["Content-Type" => "text/html"]);
+    }
+
+    $html = $template->render(["hello" => "world"]);
+
+    //var_dump( $html);
+
+    //return $render;
+    return new Response($html, 200, ["Content-Type" => "text/html"]);
+  }
 }
