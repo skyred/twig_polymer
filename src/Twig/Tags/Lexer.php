@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file
+ * Contains Drupal\twig_polymer\Twig\Tags\Lexer.
+ */
+
 namespace Drupal\twig_polymer\Twig\Tags;
 
 use Twig_Environment;
@@ -10,9 +15,7 @@ use Twig_Lexer;
  * Overrides the default Twig lexer so that Polymer tags can be wrapped
  * in {% verbatim %} tags.
  */
-class Lexer
-    extends Twig_Lexer
-{
+class Lexer extends Twig_Lexer {
 
   /**
    * @var array
@@ -25,8 +28,7 @@ class Lexer
    * @param Twig_Environment $env
    * @param array $options
    */
-  public function __construct(Twig_Environment $env, array $options = [])
-    {
+  public function __construct(Twig_Environment $env, array $options = []) {
     parent::__construct($env, $options);
     $config  = \Drupal::config("twig_polymer.settings");
     $element_start = $config->get("twig_tag");
@@ -39,12 +41,11 @@ class Lexer
   /**
    * {@inheritdoc}
    */
-  public function tokenize($code, $filename = NULL)
-    {
-    foreach($this->polymer_regexes["starts"] as $regex) {
+  public function tokenize($code, $filename = NULL) {
+    foreach ($this->polymer_regexes["starts"] as $regex) {
       $code = preg_replace($regex, '\\1{% verbatim %}', $code);
     }
-    foreach($this->polymer_regexes["ends"] as $regex) {
+    foreach ($this->polymer_regexes["ends"] as $regex) {
       $code = preg_replace($regex, '{% endverbatim %}\\1', $code);
     }
 

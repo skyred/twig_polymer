@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file
+ * Contains Drupal\twig_polymer\Twig\Tags\PolymerTokenParser.
+ */
+
 namespace Drupal\twig_polymer\Twig\Tags;
 
 
@@ -16,8 +21,7 @@ class PolymerTokenParser
   /**
    * {@inheritdoc}
    */
-  public function getTag()
-    {
+  public function getTag() {
     $config = \Drupal::config("twig_polymer.settings");
     return $config->get("twig_tag");
   }
@@ -25,8 +29,7 @@ class PolymerTokenParser
   /**
    * {@inheritdoc}
    */
-  public function parse(Twig_Token $token)
-    {
+  public function parse(Twig_Token $token) {
     $stream = $this->parser->getStream();
     if ($stream->nextIf(Twig_Token::NAME_TYPE, "import")) {
       return $this->parseImport($token);
@@ -45,8 +48,7 @@ class PolymerTokenParser
    * @return ImportNode
    * @throws Twig_Error_Syntax
    */
-  public function parseImport(Twig_Token $token)
-    {
+  public function parseImport(Twig_Token $token) {
     $lineno = $token->getLine();
     $stream = $this->parser->getStream();
     $assets = [];
@@ -75,8 +77,7 @@ class PolymerTokenParser
    * @return ElementNode
    * @throws Twig_Error_Syntax
    */
-  public function parseElement(Twig_Token $token)
-    {
+  public function parseElement(Twig_Token $token) {
     $lineno       = $token->getLine();
     $stream       = $this->parser->getStream();
     $element_name = $stream->expect(Twig_Token::STRING_TYPE);

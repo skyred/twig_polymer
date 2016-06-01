@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ztl8702
- * Date: 1/06/16
- * Time: 2:51 PM
+ * @file
+ * Contains Drupal\twig_polymer\Asset\HTMLCollectionRenderer.
  */
 
 namespace Drupal\twig_polymer\Asset;
@@ -11,7 +9,6 @@ namespace Drupal\twig_polymer\Asset;
 
 use Drupal\Core\Asset\AssetCollectionRendererInterface;
 
-class HTMLCollectionRenderer implements AssetCollectionRendererInterface
-{
+class HTMLCollectionRenderer implements AssetCollectionRendererInterface {
 
 }

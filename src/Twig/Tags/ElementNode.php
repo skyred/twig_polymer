@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file
+ * Contains Drupal\twig_polymer\Twig\Tags\ElementNode.
+ */
+
 namespace Drupal\twig_polymer\Twig\Tags;
 
 use Twig_NodeTraverser;
@@ -9,9 +14,7 @@ use Twig_Compiler;
 /**
  * Represents a `polymer_element` node.
  */
-class ElementNode
-    extends Twig_Node
-{
+class ElementNode extends Twig_Node {
   /**
    * @var Twig_Token
    */
@@ -23,16 +26,15 @@ class ElementNode
   private $_attributes = [];
 
   /**
-   * Constructor
+   * ElementNode constructor.
    *
-   * @param Twig_Token $element_name
-   * @param Twig_Node $body
-   * @param Twig_Token[] $attributes
-   * @param int $lineno
-   * @param string $tag
+   * @param \Twig_Token $element_name
+   * @param \Twig_Node $body
+   * @param array $attributes
+   * @param null|string $lineno
+   * @param $tag
    */
-  public function __construct(Twig_Token $element_name, Twig_Node $body, array $attributes, $lineno, $tag)
-    {
+  public function __construct(Twig_Token $element_name, Twig_Node $body, array $attributes, $lineno, $tag) {
     parent::__construct(["body" => $body], $attributes, $lineno, $tag);
     $this->_element_name = $element_name;
     $this->_attributes   = $attributes;
@@ -41,8 +43,7 @@ class ElementNode
   /**
    * {@inheritdoc}
    */
-  public function compile(Twig_Compiler $compiler)
-    {
+  public function compile(Twig_Compiler $compiler) {
     $attributes = [];
     foreach ($this->_attributes as $name => $attr) {
       $name              = str_replace("on_", "on-", $name);

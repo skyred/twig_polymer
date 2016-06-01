@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file
+ * Contains Drupal\twig_polymer\Exception\RuntimeException.
+ */
+
 namespace Drupal\twig_polymer\Exception;
 
 /**

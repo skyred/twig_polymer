@@ -1,6 +1,7 @@
 <?php
 /**
- * Contains Drupal\twig_polymer\Controller\PolymerController
+ * @file
+ * Contains Drupal\twig_polymer\Controller\PolymerController.
  */
 
 namespace Drupal\twig_polymer\Controller;
@@ -8,8 +9,7 @@ namespace Drupal\twig_polymer\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class PolymerController
-{
+class PolymerController {
   public function getElement($themename, $elementname) {
     return $this->getElementFromTheme($themename, $elementname);
   }
@@ -43,8 +43,8 @@ class PolymerController
     try {
       $template = $twig
         ->loadTemplate($theme_dir . '/polymer-elements/' . $element .'.html.twig');
-    } catch (\Twig_Error_Loader $e) {
-
+    }
+    catch (\Twig_Error_Loader $e) {
       return new Response('Template not found.', 404, ["Content-Type" => "text/html"]);
     }
     $html = $template->render(["hello" => "world"]);

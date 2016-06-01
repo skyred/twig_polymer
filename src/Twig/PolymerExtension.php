@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file
+ * Contains Drupal\twig_polymer\Twig\PolymerExtension.
+ */
+
 namespace Drupal\twig_polymer\Twig;
 
 use Drupal\twig_polymer\Twig\Tags\PolymerTokenParser;
@@ -10,9 +15,7 @@ use Twig_SimpleFilter;
 /**
  * The Polymer Twig extension.
  */
-class PolymerExtension
-    extends Twig_Extension
-{
+class PolymerExtension extends Twig_Extension {
 
   private $config;
   /**
@@ -39,8 +42,7 @@ class PolymerExtension
    *
    * @return array
    */
-  public function getFunctions()
-    {
+  public function getFunctions() {
     return array(
       new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'asset', function($filename) {
         if (substr($filename, -5) === ".html") {
@@ -66,8 +68,7 @@ class PolymerExtension
    *
    * @return array
    */
-  public function getFilters()
-    {
+  public function getFilters() {
     return $this->filters;
   }
 
@@ -76,8 +77,7 @@ class PolymerExtension
    *
    * @return array An array of Twig_TokenParserInterface or Twig_TokenParserBrokerInterface instances
    */
-  public function getTokenParsers()
-    {
+  public function getTokenParsers() {
     return array(
       new PolymerTokenParser(),
     );
@@ -88,8 +88,7 @@ class PolymerExtension
    *
    * @return array
    */
-  public function getGlobals()
-    {
+  public function getGlobals() {
     return [
             "polymer" => [
                 "configuration" => new PolymerConfig(),
@@ -102,8 +101,7 @@ class PolymerExtension
    *
    * @return string The extension name
    */
-  public function getName()
-    {
+  public function getName() {
     return "polymer_extension";
   }
 }

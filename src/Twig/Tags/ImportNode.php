@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file
+ * Contains Drupal\twig_polymer\Twig\Tags\ImportNode.
+ */
+
 namespace Drupal\twig_polymer\Twig\Tags;
 
 use Twig_Node_Expression_Array;
@@ -9,26 +14,22 @@ use Twig_Compiler;
 /**
  * Represents a `polymer_import` node.
  */
-class ImportNode
-    extends Twig_Node
-{
+class ImportNode extends Twig_Node {
   /**
-   * Constructor
+   * Constructor.
    *
    * @param Twig_Node_Expression[] $assets
    * @param int $lineno
    * @param string $tag
    */
-  public function __construct(array $assets, $lineno, $tag)
-    {
+  public function __construct(array $assets, $lineno, $tag) {
     parent::__construct([], ["assets" => $assets], $lineno, $tag);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function compile(Twig_Compiler $compiler)
-    {
+  public function compile(Twig_Compiler $compiler) {
     $config = \Drupal::config("twig_polymer.settings");
     $template = $config->get("template_import");
     $assets   = $this->getAttribute("assets");
