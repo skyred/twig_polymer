@@ -1,0 +1,23 @@
+{
+  "name": "twig_polymer",
+  "homepage": "https://github.com/ztl8702/twig_polymer",
+  "authors": [
+    "Radium Zheng <ztl8702@msn.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "juicy-html": "^1.1.0",
+    "polymer": "^1.5.0",
+    "webcomponentsjs": "^0.7.22"
+  }
+}

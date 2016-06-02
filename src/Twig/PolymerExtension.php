@@ -47,7 +47,7 @@ class PolymerExtension extends Twig_Extension {
       new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'asset', function($filename) {
         if (substr($filename, -5) === ".html") {
           // if filename ends with ".html" we load the element from vendor library.
-          return "/". $this->config->get("path_components") . '/'. $filename;
+          return drupal_get_path('module', 'twig_polymer'). '/' . $this->config->get("path_components") . '/'. $filename;
         } else {
           $base_url = \Drupal::url("twig_polymer.get_element_current_theme", ["elementname" => $filename]);
           return $base_url;

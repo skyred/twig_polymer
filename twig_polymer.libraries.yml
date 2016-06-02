@@ -2,4 +2,4 @@ webcomponents-lite:
   header: true
   version: 1.x
   js:
-    vendor/webcomponentsjs/webcomponents-lite.min.js: { weight: -30 }
+    bower_components/webcomponentsjs/webcomponents-lite.min.js: { weight: -30 }
