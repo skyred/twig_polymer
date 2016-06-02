@@ -9,7 +9,7 @@ Making Polymer (and Web Components) work more easily with Twig.
  * Provides an endpoint for loading Polymer elements from the browser.
 
 ## Installation
- - Go to `Drupal root directory /libraries/` (create the folder if it does not exsit), run `bower install juicy-html polymer webcomponentsjs`.
+ - Download this module, go to its directory and run `bower install`.
  - Enable this module.
 
 ## Usage
