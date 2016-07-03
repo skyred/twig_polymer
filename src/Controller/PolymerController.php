@@ -6,7 +6,6 @@
 
 namespace Drupal\twig_polymer\Controller;
 
-
 use Symfony\Component\HttpFoundation\Response;
 
 class PolymerController {
