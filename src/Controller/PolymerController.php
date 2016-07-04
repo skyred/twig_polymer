@@ -22,12 +22,12 @@ class PolymerController {
   }
 
   public function getElement($element) {
-    $path = $this->elementDiscovery->getElementInternalPath($element, $this->themeManager->getActiveTheme()->getName());
+    $path = $this->elementDiscovery->getElementFilesystemPath($element, $this->themeManager->getActiveTheme()->getName());
     return $this->loadElementFromFile($path);
   }
 
   public function getElementThemeSpecified($themename, $element) {
-    $path = $this->elementDiscovery->getElementInternalPath($element, $themename);
+    $path = $this->elementDiscovery->getElementFilesystemPath($element, $themename);
     return $this->loadElementFromFile($path);
   }
 
@@ -35,7 +35,7 @@ class PolymerController {
   /**
    * Response with a Polymer Element
    */
-  protected function getElementFromTheme($path) {
+  protected function loadElementFromFile($path) {
     if (!$path) {
       return new Response('Not found.', 404, ["Content-Type" => "text/html"]);
     }

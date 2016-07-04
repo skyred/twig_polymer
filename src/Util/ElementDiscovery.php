@@ -38,10 +38,22 @@ class ElementDiscovery {
    *   The parent theme name, or FALSE if not found.
    */
   protected function getParentTheme($themeName) {
-    return $this->themeInitialization->getActiveThemeByName($themeName)->getBaseThemes()[0];
+    $thisTheme = $this->themeInitialization->getActiveThemeByName($themeName);
+    $baseThemes = array_keys($thisTheme->getBaseThemes());
+    return (count($baseThemes) > 0) ? $baseThemes[0] : FALSE;
   }
 
-  public function getElementInternalPath($filename, $theme = FALSE) {
+  protected function findInPath($path, $filename) {
+    $matched_files = \file_scan_directory($path, '/' . preg_quote($filename) . '/');
+    if (count($matched_files) > 0) {
+      return array_keys($matched_files)[0];
+    }
+    else {
+      return FALSE;
+    }
+  }
+
+  public function getElementFilesystemPath($filename, $theme = FALSE) {
 
     // Order of discovery:
     // 1. Custom element in current theme (/themes/my-theme/my-elements)
@@ -51,26 +63,29 @@ class ElementDiscovery {
     // 5. Repeat 3&4 until there is no parent theme
     // 6. Global 3rd party components (/libraries/bower_components)
 
-    if ($theme === FALSE) {
+    if ($theme == FALSE) {
       // Global (6)
-      $path = $this->root . '/libraries/bower_components/' . $filename;
-      return (is_file($path)) ? $path : FALSE;
+      $globalLibrary = $this->root . '/libraries/bower_components';
+      $tmp = $this->findInPath($globalLibrary, $filename);
+      return ($tmp) ? $tmp : FALSE;
     }
     else {
       // TODO: needs test when drupal is installed in a non-root directory.
-      $themePath = $this->root . drupal_get_path('theme', $theme);
+      $themePath = $this->root . '/' . drupal_get_path('theme', $theme);
 
-      $customElement = $themePath . '/my-elements/' . $filename;
-      if (is_file($customElement)) {
-        return $customElement;
+      $customElementsFolder = $themePath . '/my-elements';
+      $tmp = $this->findInPath($customElementsFolder, $filename);
+      if ($tmp) {
+        return $tmp;
       }
       else {
-        $bowerElement = $themePath . '/my-elements/' . $filename;
-        if (is_file($bowerElement)) {
-          return $bowerElement;
+        $bowerElementsFolder = $themePath . '/bower_components';
+        $tmp = $this->findInPath($bowerElementsFolder, $filename);
+        if ($tmp) {
+          return $tmp;
         }
         else {
-          return $this->getElementInternalPath($filename, $this->getParentTheme($theme));
+          return $this->getElementFilesystemPath($filename, $this->getParentTheme($theme));
         }
       }
     }
