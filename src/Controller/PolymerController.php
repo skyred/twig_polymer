@@ -29,7 +29,6 @@ class PolymerController {
   public function getElementThemeSpecified($themename, $element) {
     $path = $this->elementDiscovery->getElementInternalPath($element, $themename);
     return $this->loadElementFromFile($path);
-
   }
 
 

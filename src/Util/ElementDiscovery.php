@@ -41,7 +41,7 @@ class ElementDiscovery {
     return $this->themeInitialization->getActiveThemeByName($themeName)->getBaseThemes()[0];
   }
 
-  public function getElementInternalPath($filename, $themename = FALSE) {
+  public function getElementInternalPath($filename, $theme = FALSE) {
 
     // Order of discovery:
     // 1. Custom element in current theme (/themes/my-theme/my-elements)
@@ -51,26 +51,26 @@ class ElementDiscovery {
     // 5. Repeat 3&4 until there is no parent theme
     // 6. Global 3rd party components (/libraries/bower_components)
 
-    if ($themename === FALSE) {
+    if ($theme === FALSE) {
       // Global (6)
       $path = $this->root . '/libraries/bower_components/' . $filename;
       return (is_file($path)) ? $path : FALSE;
     }
     else {
       // TODO: needs test when drupal is installed in a non-root directory.
-      $themePath = $this->root . drupal_get_path('theme', $themename);
+      $themePath = $this->root . drupal_get_path('theme', $theme);
 
-      $customElement = $themePath . '/my-elements/' . $filename);
+      $customElement = $themePath . '/my-elements/' . $filename;
       if (is_file($customElement)) {
         return $customElement;
       }
       else {
-        $bowerElement = $themePath . '/my-elements/' . $filename);
+        $bowerElement = $themePath . '/my-elements/' . $filename;
         if (is_file($bowerElement)) {
           return $bowerElement;
         }
         else {
-          return $this->getElementInternalPath($filename, $this->getParentTheme($themename));
+          return $this->getElementInternalPath($filename, $this->getParentTheme($theme));
         }
       }
     }
