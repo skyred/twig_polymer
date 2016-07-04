@@ -44,15 +44,15 @@ class PolymerExtension extends Twig_Extension {
    */
   public function getFunctions() {
     return array(
-      new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'asset', function($filename) {
-        if (substr($filename, -5) === ".html") {
-          // if filename ends with ".html" we load the element from vendor library.
-          return base_path() . drupal_get_path('module', 'twig_polymer'). '/' . $this->config->get("path_components") . '/'. $filename;
+      new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'asset', function ($filename) {
+        if (strpos($filename, '/') === FALSE) {
+          // Theme not specified.
+          $polymer_url = \Drupal::url("twig_polymer.remap_url", ["element" => $filename]);
         } else {
-          $polymer_url = \Drupal::url("twig_polymer.get_element_current_theme", ["elementname" => $filename]);
-          return $polymer_url;
+          list($theme, $element) = explode('/', $filename);
+          $polymer_url = \Drupal::url("twig_polymer.remap_url.theme_specified", ["element" => $element, "theme" => $theme]);
         }
-
+        return $polymer_url;
       }),
       new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'encode', function($str) {
         $arr = array(
