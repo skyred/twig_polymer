@@ -8,45 +8,41 @@ namespace Drupal\twig_polymer\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Remapping URL for Polymer Elements. (poly-serve equivalent)
+ */
+
 class PolymerController {
-  public function getElement($themename, $elementname) {
-    return $this->getElementFromTheme($themename, $elementname);
+  protected $elementDiscovery;
+  protected $themeManager;
+
+  public function __construct() {
+    $this->elementDiscovery = \Drupal::service('twig_polymer.element_discovery');
+    $this->themeManager = \Drupal::service('theme.manager');
   }
 
-  public function getElementInCurrentTheme($elementname) {
+  public function getElement($element) {
+    $path = $this->elementDiscovery->getElementInternalPath($element, $this->themeManager->getActiveTheme()->getName());
+    return $this->loadElementFromFile($path);
+  }
 
-    $active_theme = \Drupal::theme()->getActiveTheme()->getName();
-    return $this->getElementFromTheme($active_theme, $elementname);
+  public function getElementThemeSpecified($themename, $element) {
+    $path = $this->elementDiscovery->getElementInternalPath($element, $themename);
+    return $this->loadElementFromFile($path);
+
   }
 
 
   /**
-   * Renders a Polymer element Twig template from a certain theme.
-   *
-   * @param string $theme_name
-   *   Name of the theme.
-   * @param string $element
-   *   Path to the template, excluding ".html.twig".
-   *
-   * @return \Symfony\Component\HttpFoundation\Response
-   *   The response object. 404 if the template is not found.
+   * Response with a Polymer Element
    */
-  protected function getElementFromTheme($theme_name, $element) {
-    $twig = \Drupal::service('twig');
-
-    $theme_dir = drupal_get_path("theme", $theme_name);
-    if ($theme_dir === "") {
-      return new Response('Theme ' . $theme_name . ' is not found.', 404, ["Content-Type" => "text/html"]);
+  protected function getElementFromTheme($path) {
+    if (!$path) {
+      return new Response('Not found.', 404, ["Content-Type" => "text/html"]);
     }
 
-    try {
-      $template = $twig
-        ->loadTemplate($theme_dir . '/polymer-elements/' . $element .'.html.twig');
-    }
-    catch (\Twig_Error_Loader $e) {
-      return new Response('Template not found.', 404, ["Content-Type" => "text/html"]);
-    }
-    $html = $template->render(["hello" => "world"]);
-    return new Response($html, 200, ["Content-Type" => "text/html"]);
+    $file = file_get_contents($path);
+
+    return new Response($file, 200, ["Content-Type" => "text/html"]);
   }
 }
