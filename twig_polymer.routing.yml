@@ -11,3 +11,10 @@ twig_polymer.get_element_current_theme:
     _controller: '\Drupal\twig_polymer\Controller\PolymerController::getElementInCurrentTheme'
   requirements:
     _permission: 'access content'
+
+twig_polymer.remap_url:
+  path: '/twig-polymer/{element}'
+  defaults:
+    _controller: '\Drupal\twig_polymer\Controller\PolymerController::getElementInCurrentTheme'
+  requirements:
+    _permission: 'access content'
