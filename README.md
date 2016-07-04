@@ -1,72 +1,20 @@
-# Twig Polymer Module for Drupal 8
+# Twig Polymer Extension for Drupal 8
 Making Polymer (and Web Components) work more easily with Twig.
 
 ## What it does
- * Loads polyfill `webcomponents-lite` on pages that uses Polymer
- * Provides a Twig extension: (Based on https://github.com/headzoo/polymer-bundle)
-   * a Twig tag {% polymer element %} for wrapping Polymer element
-   * a Twig function polymer_asset() for converting asset URL
- * Provides an endpoint for loading Polymer elements from the browser.
+ * Loads polyfill `webcomponents-lite` on pages that uses Polymer.
+ * Provides an endpoint for serving Polymer elements (equivalent to `poly-serve`).
+
+### Polymer Endpoint
+
+ - Specify theme to search: `\twig-polymer\{theme}\{element}`. e.g. `http://localhost/twig-polymer/polymer/node-full.html`
+ - Not specifing theme to search: `\twig-polymer\{element}`. e.g. `http://localhost/twig-polymer/node-full.html`. Defaults to current theme, fallback to base themes.
+
+### Theme Fallback
+If an element is not found in a theme, its parent themes are searched. If still not found, the global library folder will be searched.
+
+For details of the priority of element discovery, see: https://github.com/ztl8702/twig_polymer/blob/dev/src/Util/ElementDiscovery.php#L58
 
 ## Installation
  - Download this module, go to its directory and run `bower install`.
  - Enable this module.
-
-## Usage
-
-### Polymer Extension
-In any template, use `{{ polymer element "name" }}` to define a Polymer element.
-
-For example,
-```
-{% polymer element 'node-element' %}
-<template>
-    <article>
-        <h2>
-          <a href="{{ url }}" rel="bookmark"><content select=".label"></content></a>
-        </h2>
-    </article>
-</template>
-<script>
-  Polymer({
-    is: 'node-element',
-    properties: {
-      url: String,
-    }
-  });
-</script>
-{% endpolymer %}
-```
-will be rendered as:
-```
-<import src="polymer/polymer.html">
-<polymer-element name="node-element" >
-<template>
-    <article>
-        <h2>
-          <a href="{{ url }}" rel="bookmark"><content select=".label"></content></a>
-        </h2>
-    </article>
-</template>
-<script>
-  Polymer({
-    is: 'node-element',
-    properties: {
-      url: String,
-    }
-  });
-</script>
-</polymer-element>
-```
-### Polymer Endpoint
-To use this endpoint, put Twig templates for Polymer elements in the `/polymer-elements` directory in your theme.
-
-To access the (rendered) Polymer elements, use the endpoint `/polymer-element/{themename}/{template}`.
-
-Note that `{template}` does not include `.html.twig`. For example if you have a `node-element.html.twig` in your theme `mytheme/polymer-elements`, you should access it at `http://yoursite/polymer-element/mytheme/node-element`. Subdirectory is also supported.
-
-If your site has i18n enabled. Then {% trans %} will work in those Twig templates as well. You can translate the strings in your template at `/admin/config/regional/translate`. And, suppose you have `en` and `fr` languages enabled, 
-
-`http://yoursite/en/polymer-element/mytheme/node-element` will give you the English version, 
-
-and `http://yoursite/fr/polymer-element/mytheme/node-element` will give you the French version. 
