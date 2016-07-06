@@ -5,9 +5,9 @@ twig_polymer.remap_url:
   requirements:
     _permission: 'access content'
 
-twig_polymer.remap_url.theme_specified:
-  path: '/twig-polymer/{themename}/{element}'
-  defaults:
-    _controller: '\Drupal\twig_polymer\Controller\PolymerController::getElementThemeSpecified'
-  requirements:
-    _permission: 'access content'
+#twig_polymer.remap_url.theme_specified:
+#  path: '/twig-polymer/{themename}/{element}'
+#  defaults:
+#    _controller: '\Drupal\twig_polymer\Controller\PolymerController::getElementThemeSpecified'
+#  requirements:
+#    _permission: 'access content'

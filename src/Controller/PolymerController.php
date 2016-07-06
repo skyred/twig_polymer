@@ -22,13 +22,15 @@ class PolymerController {
   }
 
   public function getElement($element) {
-    $path = $this->elementDiscovery->getElementFilesystemPath($element, $this->themeManager->getActiveTheme()->getName());
-    return $this->loadElementFromFile($path);
+
+    $filePath = str_replace(':','/', $element);
+    $realPath = $this->elementDiscovery->getElementFilesystemPath($filePath, $this->themeManager->getActiveTheme()->getName());
+    return $this->loadElementFromFile($realPath);
   }
 
   public function getElementThemeSpecified($themename, $element) {
-    $path = $this->elementDiscovery->getElementFilesystemPath($element, $themename);
-    return $this->loadElementFromFile($path);
+    //$path = $this->elementDiscovery->getElementFilesystemPath($element, $themename);
+    //return $this->loadElementFromFile($path);
   }
 
 

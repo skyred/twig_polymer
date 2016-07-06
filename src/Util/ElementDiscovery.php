@@ -53,6 +53,11 @@ class ElementDiscovery {
     }
   }
 
+  protected function fileExists($path) {
+    return is_file($path) ? $path : FALSE;
+  }
+
+
   public function getElementFilesystemPath($filename, $theme = FALSE) {
 
     // Order of discovery:
@@ -65,22 +70,22 @@ class ElementDiscovery {
 
     if ($theme == FALSE) {
       // Global (6)
-      $globalLibrary = $this->root . '/libraries/bower_components';
-      $tmp = $this->findInPath($globalLibrary, $filename);
+      $globalLibrary = $this->root . '/libraries/bower_components/';
+      $tmp = $this->fileExists($globalLibrary . $filename);
       return ($tmp) ? $tmp : FALSE;
     }
     else {
       // TODO: needs test when drupal is installed in a non-root directory.
       $themePath = $this->root . '/' . drupal_get_path('theme', $theme);
 
-      $customElementsFolder = $themePath . '/my-elements';
-      $tmp = $this->findInPath($customElementsFolder, $filename);
+      $customElementsFolder = $themePath . '/my-elements/';
+      $tmp = $this->fileExists($customElementsFolder . $filename);
       if ($tmp) {
         return $tmp;
       }
       else {
-        $bowerElementsFolder = $themePath . '/bower_components';
-        $tmp = $this->findInPath($bowerElementsFolder, $filename);
+        $bowerElementsFolder = $themePath . '/bower_components/';
+        $tmp = $this->fileExists($bowerElementsFolder . $filename);
         if ($tmp) {
           return $tmp;
         }

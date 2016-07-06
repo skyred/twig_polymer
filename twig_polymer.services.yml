@@ -7,3 +7,8 @@ services:
   twig_polymer.element_discovery:
     class: Drupal\twig_polymer\Util\ElementDiscovery
     arguments: ['@app.root', '@theme.initialization']
+
+  twig_polymer.path_processor:
+    class: Drupal\twig_polymer\PathProcessor\TwigPolymerPathProcessor
+    tags:
+      - { name: path_processor_inbound, priority: 250 }

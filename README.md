@@ -7,7 +7,7 @@ Making Polymer (and Web Components) work more easily with Twig.
 
 ### Polymer Endpoint
 
- - Specify theme to search: `\twig-polymer\{theme}\{element}`. e.g. `http://localhost/twig-polymer/polymer/node-full.html`
+ - [Temporarily disabled] Specify theme to search: `\twig-polymer\{theme}\{element}`. e.g. `http://localhost/twig-polymer/@polymer/node-full.html`
  - Not specifing theme to search: `\twig-polymer\{element}`. e.g. `http://localhost/twig-polymer/node-full.html`. Defaults to current theme, fallback to base themes.
 
 ### Theme Fallback
