@@ -6,7 +6,7 @@ When using Polymer elements, we need a static server to serve the files (`polyme
 
 Twig Polymer Extension allows you to keep all the Polymer elements (both downloaded and your custom ones) you use in your theme folder, using Bower to manage dependencies so that they can be tracked in Git/SVN. It adheres to Polymer's [element package layout](https://www.polymer-project.org/1.0/docs/tools/polymer-cli#element-project-layout) so all dependencies between Polymer elements will not break. This module also provides a simple Twig helper that you can use to reference your Polymer elements without figuring out what the URL should be.
 
-## Technicall details
+## Technical details
 ### What it does
  * Loads polyfill `webcomponents-lite` on pages that uses Polymer.
  * Provides an endpoint for serving Polymer elements (equivalent to `poly-serve`).
