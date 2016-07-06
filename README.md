@@ -1,5 +1,10 @@
 # Twig Polymer Extension for Drupal 8
-Making Polymer (and Web Components) work more easily with Twig.
+Making it easier to use Polymer elements in Drupal's Twig templates.
+
+## What problem does it solve?
+When using Polymer elements, we need a static server to serve the files (`polymer.html`, `paper-button.html`, `your-custom-element.html`, etc.) You may put them in a static folder of your website, but that is hard to manage and you need to write awkwardly long URL in your templates to reference. Also, you cannot use relative URLs for your Polymer elements. (`<link rel='import' href="../polymer/polymer.html">` means different files on `/`, `/node/2`, `/taxonomy/10`)
+
+Twig Polymer Extension allows you to keep all the Polymer elements (both downloaded and your custom ones) you use in your theme folder, using Bower to manage dependencies so that they can be managed in Git/SVN. This module also provides a simple Twig helper that you can use to reference your Polymer elements without figuring out what the URL should be.
 
 ## What it does
  * Loads polyfill `webcomponents-lite` on pages that uses Polymer.
