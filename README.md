@@ -8,12 +8,12 @@ Twig Polymer Extension allows you to keep all the Polymer elements (both downloa
 
 ## Technical details
 ### What it does
- * Loads polyfill `webcomponents-lite` on pages that uses Polymer.
+ * Loads polyfill `webcomponents-lite` on pages that use Polymer.
  * Provides an endpoint for serving Polymer elements (equivalent to `poly-serve`).
    - Access your elements : `\twig-polymer\{element-relative-path}`. e.g. `http://localhost/twig-polymer/paper-button/paper-button.html`. Defaults to current theme, fallback to base themes.
    - Theme Fallback
-    - If an element is not found in a theme, its parent themes are searched. If still not found, the global library folder will be searched. For details of the priority of element discovery, see: https://github.com/ztl8702/twig_polymer/blob/dev/src/Util/ElementDiscovery.php#L58
-    - This allows common elements to be shared among your themes.
+     - If an element is not found in a theme, its parent themes are searched. If still not found, the global library folder will be searched. For details of the priority of element discovery, see: https://github.com/ztl8702/twig_polymer/blob/dev/src/Util/ElementDiscovery.php#L58
+     - This allows common elements to be shared among your themes.
  * Twig helper: `{% polymer import "paper-button/paper-button" %}`
 
 ## Usage
