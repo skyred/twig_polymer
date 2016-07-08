@@ -64,6 +64,7 @@ class PolymerExtension extends Twig_Extension {
         return json_encode($str);
       }),
       new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'render_var',  array($this, 'renderVar')),
+      new Twig_SimpleFunction($this->config->get('twig_tag').'_'.'rendered_array',  array($this, 'renderedArray')),
     );
   }
 
@@ -213,6 +214,76 @@ class PolymerExtension extends Twig_Extension {
     }
     $arg['#printed'] = FALSE;
     return $this->renderer->renderRoot($arg);
+  }
+
+  /**
+   * Wrapper around render() for twig printed output.
+   *
+   * If an object is passed which does not implement __toString(),
+   * RenderableInterface or toString() then an exception is thrown;
+   * Other objects are casted to string. However in the case that the
+   * object is an instance of a Twig_Markup object it is returned directly
+   * to support auto escaping.
+   *
+   * If an array is passed it is rendered via render() and scalar values are
+   * returned directly.
+   *
+   * @param mixed $arg
+   *   String, Object or Render Array.
+   *
+   * @throws \Exception
+   *   When $arg is passed as an object which does not implement __toString(),
+   *   RenderableInterface or toString().
+   *
+   * @return mixed
+   *   The rendered output or an Twig_Markup object.
+   *
+   * @see render
+   * @see TwigNodeVisitor
+   */
+  public function renderedArray($arg) {
+    // Check for a numeric zero int or float.
+    if ($arg === 0 || $arg === 0.0) {
+      return 0;
+    }
+
+    // Return early for NULL and empty arrays.
+    if ($arg == NULL) {
+      return NULL;
+    }
+
+    // Optimize for scalars as it is likely they come from the escape filter.
+    if (is_scalar($arg)) {
+      return $arg;
+    }
+
+    if (is_object($arg)) {
+      $this->bubbleArgMetadata($arg);
+      if ($arg instanceof RenderableInterface) {
+        $arg = $arg->toRenderable();
+      }
+      elseif (method_exists($arg, '__toString')) {
+        return (string) $arg;
+      }
+      // You can't throw exceptions in the magic PHP __toString() methods, see
+      // http://php.net/manual/language.oop5.magic.php#object.tostring so
+      // we also support a toString method.
+      elseif (method_exists($arg, 'toString')) {
+        return $arg->toString();
+      }
+      else {
+        throw new \Exception('Object of type ' . get_class($arg) . ' cannot be printed.');
+      }
+    }
+
+    // This is a render array, with special simple cases already handled.
+    // Early return if this element was pre-rendered (no need to re-render).
+    if (isset($arg['#printed']) && $arg['#printed'] == TRUE && isset($arg['#markup']) && strlen($arg['#markup']) > 0) {
+      return $arg['#markup'];
+    }
+    $arg['#printed'] = FALSE;
+    $this->renderer->renderRoot($arg);
+    return $arg;
   }
 
 }
