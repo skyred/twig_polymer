@@ -212,7 +212,7 @@ class PolymerExtension extends Twig_Extension {
       return $arg['#markup'];
     }
     $arg['#printed'] = FALSE;
-    return $this->renderer->render($arg);
+    return $this->renderer->renderRoot($arg);
   }
 
 }
