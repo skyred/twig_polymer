@@ -7,7 +7,7 @@ use Drupal\twig_polymer\Generator\PolymerElementGenerator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command as BaseCommand;
-use Drupal\Console\Generator\CommandGenerator;
+use Drupal\Console\Command\GeneratorCommand;
 use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
