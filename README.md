@@ -41,6 +41,7 @@ Twig Polymer Extension allows you to keep all the Polymer elements (both downloa
   - In your theme folder, first run `bower init`, then run `bower install --save your-desired-element` to install 3rd party Polymer elements you like.
   - In your theme folder, place your custom elements in `/my-elements` folder. `/bower_components` and `/my-elements` folder will be "virtually combined" to allow seamless access to both custom and 3rd party elements. 
   - Optional: add `bower_components` to your `.gitignore` file.
+
 > Note: Always use relative URL in your elements. See [Polymer documentation](https://www.polymer-project.org/1.0/docs/tools/polymer-cli#element-project-layout) for more.  
 
 ### Twig functions and helpers
