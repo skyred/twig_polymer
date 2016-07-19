@@ -31,30 +31,30 @@ class CreatePolymerElementCommand extends GeneratorCommand {
   protected function configure() {
     $this
       ->setName('polymer:element')
-      ->setDescription($this->trans('polymer.element.description'))
+      ->setDescription($this->trans('commands.polymer.element.description'))
       ->addOption(
         'theme',
         '', // Shortcut.
         InputOption::VALUE_REQUIRED,
-        $this->trans('polymer.element.options.theme')
+        $this->trans('commands.polymer.element.options.theme')
       )
       ->addOption(
         'package',
         '',
         InputOption::VALUE_OPTIONAL,
-        $this->trans('polymer.element.option.package')
+        $this->trans('commands.polymer.element.option.package')
       )
       ->addOption(
         'element',
         '',
         InputOption::VALUE_REQUIRED,
-        $this->trans('polymer.element.option.element')
+        $this->trans('commands.polymer.element.option.element')
       )
       ->addOption(
         'create-style',
         '',
         InputOption::VALUE_NONE,
-        $this->trans('polymer.element.option.create-style')
+        $this->trans('commands.polymer.element.option.create-style')
       );
   }
 
@@ -65,7 +65,7 @@ class CreatePolymerElementCommand extends GeneratorCommand {
     $io = new DrupalStyle($input, $output);
 
     $text = sprintf(
-      '[Warning] Continuing generation might overwrite existing elements.',
+      '[Warning] Continuing generation might overwrite existing elements.'
     );
 
     $theme = $input->getOption('theme');
@@ -90,10 +90,10 @@ class CreatePolymerElementCommand extends GeneratorCommand {
     // --theme option
     $theme = $input->getOption('theme');
     if (!$theme) {
-      // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-      $theme = $io->ask(
-        $this->trans('polymer.element.options.theme'),
-        'my-element'
+      $theme_list = $this->getThemeList();
+      $theme = $io->choiceNoList(
+        $this->trans('commands.polymer.element.options.theme'),
+        array_keys($theme_list)
       );
       $input->setOption('theme', $theme);
     }
@@ -101,7 +101,7 @@ class CreatePolymerElementCommand extends GeneratorCommand {
     $package = $input->getOption('package');
     if (!$package) {
       $package = $io->ask(
-        $this->trans('polymer.element.options.package'),
+        $this->trans('commands.polymer.element.options.package'),
         'my-element'
       );
       $input->setOption('package', $package);
@@ -110,16 +110,30 @@ class CreatePolymerElementCommand extends GeneratorCommand {
     $element = $input->getOption('element');
     if (!$element) {
       $element = $io->ask(
-        $this->trans('polymer.element.options.element'),
-        'my-element'
+        $this->trans('commands.polymer.element.options.element'),
+        'my-element',
+        function ($elementName) {
+          // Custom Element name must have at least one dash.
+          if (strpos($elementName, '-') !== FALSE) {
+            return $elementName;
+          }
+          else {
+            throw new \InvalidArgumentException(
+              sprintf(
+                'Element name "%s" is invalid, it mush contain at least one dash (-).',
+                $elementName
+              )
+            );
+          }
+        }
       );
       $input->setOption('element', $element);
     }
-    // --container-aware option
+    // --create-style option
     $createStyle = $input->getOption('create-style');
     if (!$createStyle) {
       $createStyle = $io->confirm(
-        $this->trans('polymer.element.options.create-style'),
+        $this->trans('commands.polymer.element.options.create-style'),
         true
       );
       $input->setOption('create-style', $createStyle);
@@ -130,5 +144,13 @@ class CreatePolymerElementCommand extends GeneratorCommand {
     return new PolymerElementGenerator();
   }
 
+  protected function getThemeList() {
+    $theme_list = [];
+    $themes = $this->getThemeHandler()->rebuildThemeData();
+    foreach ($themes as $theme_id => $theme) {
+      $theme_list[$theme_id] = $theme->getName();
+    }
+    return $theme_list;
+  }
 
 }
