@@ -6,6 +6,7 @@ use Drupal\Component\Uuid\Com;
 use Drupal\twig_polymer\Generator\PolymerElementGenerator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 use Drupal\Console\Command\GeneratorCommand;
 use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
@@ -30,22 +31,22 @@ class CreatePolymerElementCommand extends GeneratorCommand {
   protected function configure() {
     $this
       ->setName('polymer:element')
-      ->setDescription($this->trans('commands.polymer.element.description'))
+      ->setDescription($this->trans('polymer.element.description'))
       ->addOption(
         'theme',
-        '',
+        '', // Shortcut.
         InputOption::VALUE_REQUIRED,
         $this->trans('polymer.element.options.theme')
       )
       ->addOption(
         'package',
-        'my-element',
+        '',
         InputOption::VALUE_OPTIONAL,
         $this->trans('polymer.element.option.package')
       )
       ->addOption(
         'element',
-        'my-element',
+        '',
         InputOption::VALUE_REQUIRED,
         $this->trans('polymer.element.option.element')
       )
@@ -64,8 +65,7 @@ class CreatePolymerElementCommand extends GeneratorCommand {
     $io = new DrupalStyle($input, $output);
 
     $text = sprintf(
-      'I am a new generated command for the module: %s',
-      $this->getModule()
+      '[Warning] Continuing generation might overwrite existing elements.',
     );
 
     $theme = $input->getOption('theme');
@@ -91,7 +91,10 @@ class CreatePolymerElementCommand extends GeneratorCommand {
     $theme = $input->getOption('theme');
     if (!$theme) {
       // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-      $theme = $this->moduleQuestion($output);
+      $theme = $io->ask(
+        $this->trans('polymer.element.options.theme'),
+        'my-element'
+      );
       $input->setOption('theme', $theme);
     }
     // --package

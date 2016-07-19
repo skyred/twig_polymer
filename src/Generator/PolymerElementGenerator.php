@@ -5,7 +5,7 @@
  */
 namespace Drupal\twig_polymer\Generator;
 
-use Drupal\Contsole\Generator\Generator;
+use Drupal\Console\Generator\Generator;
 
 class PolymerElementGenerator extends Generator
 {
@@ -30,14 +30,14 @@ class PolymerElementGenerator extends Generator
 
     $this->renderFile(
       'console/element.html.twig',
-      $this->getSite()->getThemePath($theme).'my-elements/'.$package.'/'.$elementName.'.html',
+      $this->getSite()->getThemePath($theme).'/my-elements/'.$package.'/'.$elementName.'.html',
       $parameters
     );
 
     if ($createStyle) {
       $this->renderFile(
-        'console/style.html.twig',
-        $this->getSite()->getThemePath($theme).'my-elements/'.$package.'/'.$elementName.'-styles.html',
+        'console/styles.html.twig',
+        $this->getSite()->getThemePath($theme).'/my-elements/'.$package.'/'.$elementName.'-styles.html',
         $parameters
       );
     }
