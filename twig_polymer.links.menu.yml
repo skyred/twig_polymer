@@ -1,0 +1,7 @@
+twig_polymer.admin_settings_form:
+  title: 'Twig Polymer Extension Settings'
+  route_name: twig_polymer.admin_settings_form
+  description: 'Settings for Twig Polymer Extension module'
+  parent: system.admin_config_development
+  weight: 99
+

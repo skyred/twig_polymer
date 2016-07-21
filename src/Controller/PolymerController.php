@@ -20,6 +20,7 @@ class PolymerController {
   public function __construct() {
     $this->elementDiscovery = \Drupal::service('twig_polymer.element_discovery');
     $this->themeManager = \Drupal::service('theme.manager');
+    $this->config = \Drupal::config("twig_polymer.settings");
   }
 
   /**
@@ -59,6 +60,13 @@ class PolymerController {
       $contentType = 'text/html';
     }
 
-    return new Response($file, 200, ["Content-Type" => $contentType]);
+    $response = new Response($file, 200, ["Content-Type" => $contentType]);
+    if (!$this->config->get('debug_mode')){
+      $response->setPublic();
+      $response->setMaxAge($this->config->get('max_age'));
+      $response->setSharedMaxAge($this->config->get('max_age'));
+    }
+
+    return $response;
   }
 }
