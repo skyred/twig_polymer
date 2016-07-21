@@ -2,7 +2,6 @@
 
 namespace Drupal\twig_polymer\Command;
 
-use Drupal\Component\Uuid\Com;
 use Drupal\twig_polymer\Generator\PolymerElementGenerator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,30 +30,30 @@ class CreatePolymerElementCommand extends GeneratorCommand {
   protected function configure() {
     $this
       ->setName('polymer:element')
-      ->setDescription($this->trans('commands.polymer.element.description'))
+      ->setDescription($this->trans('Scaffolding a new Polymer element.'))
       ->addOption(
         'theme',
         '', // Shortcut.
         InputOption::VALUE_REQUIRED,
-        $this->trans('commands.polymer.element.options.theme')
+        $this->trans('Theme name')
       )
       ->addOption(
         'package',
         '',
         InputOption::VALUE_OPTIONAL,
-        $this->trans('commands.polymer.element.option.package')
+        $this->trans('Package name')
       )
       ->addOption(
         'element',
         '',
         InputOption::VALUE_REQUIRED,
-        $this->trans('commands.polymer.element.option.element')
+        $this->trans('Element name (without .html)')
       )
       ->addOption(
         'create-style',
         '',
         InputOption::VALUE_NONE,
-        $this->trans('commands.polymer.element.option.create-style')
+        $this->trans('Create a separate style module')
       );
   }
 
@@ -92,7 +91,7 @@ class CreatePolymerElementCommand extends GeneratorCommand {
     if (!$theme) {
       $theme_list = $this->getThemeList();
       $theme = $io->choiceNoList(
-        $this->trans('commands.polymer.element.options.theme'),
+        $this->trans('Enter the theme name'),
         array_keys($theme_list)
       );
       $input->setOption('theme', $theme);
@@ -101,7 +100,7 @@ class CreatePolymerElementCommand extends GeneratorCommand {
     $package = $input->getOption('package');
     if (!$package) {
       $package = $io->ask(
-        $this->trans('commands.polymer.element.options.package'),
+        $this->trans('Enter the package name'),
         'my-element'
       );
       $input->setOption('package', $package);
@@ -110,7 +109,7 @@ class CreatePolymerElementCommand extends GeneratorCommand {
     $element = $input->getOption('element');
     if (!$element) {
       $element = $io->ask(
-        $this->trans('commands.polymer.element.options.element'),
+        $this->trans('Enter the element name'),
         'my-element',
         function ($elementName) {
           // Custom Element name must have at least one dash.
@@ -133,7 +132,7 @@ class CreatePolymerElementCommand extends GeneratorCommand {
     $createStyle = $input->getOption('create-style');
     if (!$createStyle) {
       $createStyle = $io->confirm(
-        $this->trans('commands.polymer.element.options.create-style'),
+        $this->trans('Do you want to create a separate style module?'),
         true
       );
       $input->setOption('create-style', $createStyle);
