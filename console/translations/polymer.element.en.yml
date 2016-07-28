@@ -1,0 +1,6 @@
+description: 'Scaffolding a new Polymer element'
+options:
+  theme: 'Theme name'
+  package: 'Package name'
+  element: 'Element name (without .html)'
+  create-style: 'Create a separate style module?'

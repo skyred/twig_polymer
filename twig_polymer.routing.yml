@@ -1,13 +1,23 @@
-twig_polymer.get_element:
-  path: '/polymer-element/{themename}/{elementname}'
+twig_polymer.remap_url:
+  path: '/twig-polymer/{element}'
   defaults:
     _controller: '\Drupal\twig_polymer\Controller\PolymerController::getElement'
   requirements:
     _permission: 'access content'
 
-twig_polymer.get_element_current_theme:
-  path: '/polymer-element/{elementname}'
+#twig_polymer.remap_url.theme_specified:
+#  path: '/twig-polymer/{themename}/{element}'
+#  defaults:
+#    _controller: '\Drupal\twig_polymer\Controller\PolymerController::getElementThemeSpecified'
+#  requirements:
+#    _permission: 'access content'
+twig_polymer.admin_settings_form:
+  path: '/admin/config/twig_polymer/settings'
   defaults:
-    _controller: '\Drupal\twig_polymer\Controller\PolymerController::getElementInCurrentTheme'
+    _form: '\Drupal\twig_polymer\Form\AdminSettingsForm'
+    _title: 'Twig Polymer Extension Settings'
   requirements:
-    _permission: 'access content'
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE
+

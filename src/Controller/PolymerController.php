@@ -6,48 +6,67 @@
 
 namespace Drupal\twig_polymer\Controller;
 
-
+use Drupal\twig_polymer\PathProcessor\TwigPolymerPathProcessor;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Remapping URL for Polymer Elements. (poly-serve equivalent)
+ */
+
 class PolymerController {
-  public function getElement($themename, $elementname) {
-    return $this->getElementFromTheme($themename, $elementname);
+  protected $elementDiscovery;
+  protected $themeManager;
+
+  public function __construct() {
+    $this->elementDiscovery = \Drupal::service('twig_polymer.element_discovery');
+    $this->themeManager = \Drupal::service('theme.manager');
+    $this->config = \Drupal::config("twig_polymer.settings");
   }
 
-  public function getElementInCurrentTheme($elementname) {
+  /**
+   * @param $element
+   * @return \Symfony\Component\HttpFoundation\Response
+   */
+  public function getElement($element) {
+    $filePath = TwigPolymerPathProcessor::replaceColon($element);
+    $realPath = $this->elementDiscovery->getElementFilesystemPath($filePath, $this->themeManager->getActiveTheme()->getName());
+    return $this->loadElementFromFile($realPath);
+  }
 
-    $active_theme = \Drupal::theme()->getActiveTheme()->getName();
-    return $this->getElementFromTheme($active_theme, $elementname);
+  public function getElementThemeSpecified($themename, $element) {
+    //$path = $this->elementDiscovery->getElementFilesystemPath($element, $themename);
+    //return $this->loadElementFromFile($path);
   }
 
 
   /**
-   * Renders a Polymer element Twig template from a certain theme.
-   *
-   * @param string $theme_name
-   *   Name of the theme.
-   * @param string $element
-   *   Path to the template, excluding ".html.twig".
-   *
-   * @return \Symfony\Component\HttpFoundation\Response
-   *   The response object. 404 if the template is not found.
+   * Response with a Polymer Element
    */
-  protected function getElementFromTheme($theme_name, $element) {
-    $twig = \Drupal::service('twig');
-
-    $theme_dir = drupal_get_path("theme", $theme_name);
-    if ($theme_dir === "") {
-      return new Response('Theme ' . $theme_name . ' is not found.', 404, ["Content-Type" => "text/html"]);
+  protected function loadElementFromFile($path) {
+    if (!$path) {
+      return new Response('Not found.', 404, ["Content-Type" => "text/html"]);
     }
 
-    try {
-      $template = $twig
-        ->loadTemplate($theme_dir . '/polymer-elements/' . $element .'.html.twig');
+    $file = file_get_contents($path);
+    $path_parts = pathinfo($path);
+    $extension = $path_parts['extension'];
+    if ($extension == 'js') {
+      $contentType = 'application/javascript';
     }
-    catch (\Twig_Error_Loader $e) {
-      return new Response('Template not found.', 404, ["Content-Type" => "text/html"]);
+    elseif ($extension == 'css') {
+      $contentType = 'text/css';
     }
-    $html = $template->render(["hello" => "world"]);
-    return new Response($html, 200, ["Content-Type" => "text/html"]);
+    else {
+      $contentType = 'text/html';
+    }
+
+    $response = new Response($file, 200, ["Content-Type" => $contentType]);
+    if (!$this->config->get('debug_mode')){
+      $response->setPublic();
+      $response->setMaxAge($this->config->get('max_age'));
+      $response->setSharedMaxAge($this->config->get('max_age'));
+    }
+
+    return $response;
   }
 }

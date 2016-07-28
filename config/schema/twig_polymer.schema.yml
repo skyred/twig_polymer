@@ -19,3 +19,9 @@ twig_polymer.settings:
     auto_verbatim:
       type: boolean
       label: 'Toggle Auto Verbatim'
+    debug_mode:
+      type: boolean
+      label: 'Debug Mode'
+    max_age:
+      type: string
+      label: 'Max age'

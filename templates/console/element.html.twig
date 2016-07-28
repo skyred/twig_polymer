@@ -1,0 +1,38 @@
+<link rel="import" href="../polymer/polymer.html">
+{% if create_style %}
+<link rel="import" href="{{ style_element_name }}.html">
+{% endif %}
+<!--
+/**
+ * @file
+ * Add description.
+ *
+ * Properties:
+ *
+ * DOM children:
+ *
+ */
+-->
+<dom-module id="{{ element }}">
+  <template>
+{% if create_style %}
+  　<style include="{{ style_element_name }}"></style>
+{% else %}
+    <style>
+    /* Add your styles here. */
+    </style>
+{% endif %}
+    <!-- Construct the element's ShadowDOM here -->
+  </template>
+  <script>
+    Polymer({
+      is: '{{ element }}',
+      properties: {
+        // Add attributes and config objects here.
+      },
+      ready: function () {
+        // Add actions to do when the elements is loaded on the page.
+      }
+    });
+  </script>
+</dom-module>
