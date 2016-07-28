@@ -11,6 +11,7 @@ Making it easier to use Polymer elements in Drupal's Twig templates.
 - [Features](#features)
   - [Polymer endpoint](#polymer-endpoint)
     - [Usage](#usage)
+  - [Unified Virtual Component Registry](#unified-virtual-component-registry)
   - [Twig functions and helpers](#twig-functions-and-helpers)
     - [Usage](#usage-1)
   - [Drupal Console command](#drupal-console-command)
@@ -43,6 +44,50 @@ Twig Polymer Extension allows you to keep all the Polymer elements (both downloa
   - Optional: add `bower_components` to your `.gitignore` file.
 
 > Note: Always use relative URL in your elements. See [Polymer documentation](https://www.polymer-project.org/1.0/docs/tools/polymer-cli#element-project-layout) for more.  
+
+### Unified Virtual Component Registry
+A single registry containing all components from all themes, either 3rd party or custom-built.
+
+Suppose we have a base theme and a sub-theme.
+
+```
+base-theme                                    sub-theme
+├── base-theme.info.yml                       ├── sub-theme.info.yml
+├── bower_components                          ├── bower_components
+│   ├── polymer                               │   ├── echo-html
+│   │   └── polymer.html                      │   │   └── echo-html.html
+│   └── neon-animations                       │   └── paper-fab
+|      └── neon-animations.html               |      └── paper-fab.html
+├── my-elements                               ├── my-elements
+|   ├── my-region                             |   ├── my-block
+|   |   ├── my-region.html                    |   |   └── my-block.html 
+|   |   └── my-region-styles.html             |   └── ...
+|   └── ...                                   └── templates
+└── templates
+```
+
+The `/twig-polymer/` [endpoint](#polymer-endpoint) will give you access to all of the components in all themes as if they were in a unified registry. 
+```
+\twig-polymer
+├── polymer
+│   └── polymer.html
+├── neon-animations
+│   └── neon-animations.htmlb
+├── my-region
+|   ├── my-region.html   
+|   └── my-region-styles.html 
+├── echo-html   
+│   └── echo-html.html
+├── paper-fab
+|   └── paper-fab.html           
+└── my-block
+    └── my-block.html
+```
+
+> Conflict resolution: sub themes have greater priority and they override what is in the base theme.  Custom built elements (`my-elements`)
+> has greater priority over 3rd party elements (`bower_components`). This rule applies **recursively**. 
+
+![Registry](.docs/registry.png)
 
 ### Twig functions and helpers
  - `{% polymer import %}` is a shortcut for **HTML import `<link>` elements**.
