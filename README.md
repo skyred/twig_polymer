@@ -1,6 +1,9 @@
 # Twig Polymer Extension for Drupal 8
 Making it easier to use Polymer elements in Drupal's Twig templates.
 
+## Status
+This module is **put on hold** as the author is focused on [Web Components Renderer](http://github.com/ztl8702/wcr).
+
 ## Table of contents
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
